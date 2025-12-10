@@ -1,0 +1,22 @@
+{
+  "name": "KAMS Enterprise Manager",
+  "short_name": "KAMS ISP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#2563eb",
+  "orientation": "any",
+  "description": "Offline ISP Client Management System",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/10823/10823354.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/10823/10823354.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

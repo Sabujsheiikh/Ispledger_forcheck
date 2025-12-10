@@ -1,0 +1,31 @@
+{
+  "name": "ispledger-desktop",
+  "version": "2.1.0",
+  "private": true,
+  "homepage": "./",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^3.5.1",
+    "lucide-react": "^0.555.0",
+    "xlsx": "^0.18.5",
+    "jspdf": "^3.0.4",
+    "jspdf-autotable": "^5.0.2"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
+    "fetch:webview2": "powershell -NoProfile -Command \"if(-not (Test-Path 'tools')){ New-Item -ItemType Directory -Path 'tools' | Out-Null }; try { Invoke-WebRequest -Uri 'https://go.microsoft.com/fwlink/?LinkId=2124703' -OutFile 'tools\\MicrosoftEdgeWebView2RuntimeInstallerX64.exe' -UseBasicParsing -ErrorAction Stop } catch { Write-Host 'Failed to download WebView2 bootstrapper'; exit 0 }\"",
+    "preview": "vite preview",
+    "wpf:sync": "npm run build && powershell -NoProfile -Command \"if(-not (Test-Path 'WPF_APP/wwwroot')){ New-Item -ItemType Directory -Path 'WPF_APP/wwwroot' | Out-Null }; Remove-Item -Recurse -Force 'WPF_APP/wwwroot/*' -ErrorAction SilentlyContinue; Copy-Item -Path 'dist/*' -Destination 'WPF_APP/wwwroot' -Recurse -Force\"",
+    "package:win": "npm run wpf:sync && npm run fetch:webview2 && dotnet publish WPF_APP -c Release -r win-x64 -p:PublishSingleFile=false && \"C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe\" installer.iss"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
+    ,"@types/node": "^20.11.3"
+  }
+}

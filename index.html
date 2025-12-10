@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="description" content="ISPLedger - Offline ISP Manager Software">
+    <title>ISPLedger - ISP Manager</title>
+    <!-- Local Manifest -->
+    <link rel="manifest" href="/assets/manifest-Cg31c2Ew.json" />
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/10823/10823354.png" />
+    
+    <!-- Tailwind CSS (Handled by Vite/PostCSS in production, or CDN for quick dev) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                50: 'var(--brand-50)',
+                100: 'var(--brand-100)',
+                200: 'var(--brand-200)',
+                300: 'var(--brand-300)',
+                400: 'var(--brand-400)',
+                500: 'var(--brand-500)',
+                600: 'var(--brand-600)',
+                700: 'var(--brand-700)',
+                800: 'var(--brand-800)',
+                900: 'var(--brand-900)',
+                950: 'var(--brand-950)',
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.3s ease-out forwards',
+              'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'scale-in': 'scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'spin-slow': 'spin 3s linear infinite',
+              'bounce-in': 'bounceIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { opacity: '0', transform: 'translateY(15px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              scaleIn: {
+                '0%': { opacity: '0', transform: 'scale(0.95)' },
+                '100%': { opacity: '1', transform: 'scale(1)' },
+              },
+              bounceIn: {
+                '0%': { opacity: '0', transform: 'scale(0.5)' },
+                '60%': { opacity: '1', transform: 'scale(1.05)' },
+                '100%': { transform: 'scale(1)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Smooth Scrolling & Scrollbar Polish */
+      html { scroll-behavior: smooth; }
+      
+      /* Default Theme (Blue) - Can be overridden by JS */
+      :root {
+        --brand-50: #eff6ff;
+        --brand-100: #dbeafe;
+        --brand-200: #bfdbfe;
+        --brand-300: #93c5fd;
+        --brand-400: #60a5fa;
+        --brand-500: #3b82f6;
+        --brand-600: #2563eb;
+        --brand-700: #1d4ed8;
+        --brand-800: #1e40af;
+        --brand-900: #1e3a8a;
+        --brand-950: #172554;
+      }
+
+      /* Modern Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1; 
+        border-radius: 6px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #94a3b8; 
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background-color: #475569; 
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background-color: #64748b; 
+      }
+
+      /* Utilities */
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .dark .glass {
+        background: rgba(17, 24, 39, 0.7);
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      
+      /* Base styles */
+      body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      
+      /* --- PROFESSIONAL PRINT STYLES --- */
+      @media print {
+        @page {
+          size: landscape; /* Landscape for Master Sheet */
+          margin: 10mm;
+        }
+
+        body, html, #root {
+          width: 100%;
+          height: auto !important;
+          overflow: visible !important;
+          background: white !important;
+          color: black !important;
+          font-size: 9pt;
+        }
+        
+        /* Hide all non-essential UI */
+        .no-print, header, aside, footer, .toast-container, .print\:hidden { 
+          display: none !important; 
+        }
+        
+        /* Ensure main content area is visible and full width */
+        main, .overflow-y-auto, .overflow-auto, .flex-1, .print-container, .max-w-\[2000px\] {
+          overflow: visible !important;
+          height: auto !important;
+          max-height: none !important;
+          display: block !important;
+          width: 100% !important;
+          max-width: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .print\:block { display: block !important; }
+        .print\:border-none { border: none !important; }
+        .print\:shadow-none { box-shadow: none !important; }
+        .print\:break-inside-avoid { page-break-inside: avoid; }
+        .print\:p-0 { padding: 0 !important; }
+
+        /* Table Styling */
+        table { 
+          page-break-inside: auto; 
+          width: 100% !important;
+          border-collapse: collapse !important;
+          table-layout: auto; /* Allow content to dictate width */
+        }
+        tr { 
+          page-break-inside: avoid; 
+          page-break-after: auto; 
+          height: auto !important; /* Fix overlapping rows */
+        }
+        thead { display: table-header-group; }
+        tfoot { display: table-footer-group; }
+        
+        th, td { 
+          border: 1px solid #e5e7eb !important;
+          padding: 4px 6px !important;
+          font-size: 8pt;
+          vertical-align: middle;
+          height: auto !important; /* Fix overlapping cells */
+          white-space: normal !important; /* Allow text wrapping in print */
+        }
+        th { 
+          font-weight: bold; 
+          background-color: #f3f4f6 !important; 
+          color: #1f2937 !important;
+          -webkit-print-color-adjust: exact;
+        }
+        
+        /* Standardized Header & Footer */
+        .print-header {
+            display: block !important;
+            text-align: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3b82f6;
+        }
+        .print-header-company { font-size: 1.5rem; font-weight: 900; color: #111827; }
+        .print-header-title { font-size: 1rem; color: #4b5563; }
+        .print-header-meta { font-size: 0.8rem; color: #6b7280; }
+
+        .print-footer {
+            display: block !important;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 8pt;
+            color: #6b7280;
+            border-top: 1px solid #d1d5db;
+            padding-top: 4px;
+            background: white;
+        }
+
+        /* Hide scrollbars */
+        ::-webkit-scrollbar { display: none; }
+      }
+    </style>
+    <!-- Google Identity Services & API Client -->
+    <script>
+      // Only load Google web APIs when running in a regular browser.
+      // In WebView2 (desktop host) we use native loopback OAuth to avoid tracking/storage blocks.
+      (function(){
+        try {
+          var isWebView2 = !!(window.chrome && (window as any).chrome.webview);
+          if (!isWebView2) {
+            var s1 = document.createElement('script');
+            s1.src = 'https://accounts.google.com/gsi/client';
+            s1.async = true; s1.defer = true;
+            document.head.appendChild(s1);
+            var s2 = document.createElement('script');
+            s2.src = 'https://apis.google.com/js/api.js';
+            s2.async = true; s2.defer = true;
+            document.head.appendChild(s2);
+          } else {
+            console.log('WebView2 detected — skipping Google web API includes');
+          }
+        } catch(e) { console.warn('Error loading conditional Google scripts', e); }
+      })();
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "jspdf": "https://aistudiocdn.com/jspdf@^3.0.4",
+    "xlsx": "https://aistudiocdn.com/xlsx@^0.18.5",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "jspdf-autotable": "https://aistudiocdn.com/jspdf-autotable@^5.0.2",
+    "vite": "https://aistudiocdn.com/vite@^7.2.6",
+    "url": "https://aistudiocdn.com/url@^0.11.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300 selection:bg-brand-500 selection:text-white overflow-hidden">
+    <div id="root"></div>
+    <!-- VITE ENTRY POINT -->
+    <script type="module" src="/src/index.tsx"></script>
+</body>
+</html>
