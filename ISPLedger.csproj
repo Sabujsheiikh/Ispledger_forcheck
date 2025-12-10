@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>ISPLedger</AssemblyName>
+    <RootNamespace>ISPLedger</RootNamespace>
+    <!-- Set application version and icon so the published EXE has the correct metadata and icon -->
+    <Version>2.1.1</Version>
+    <AssemblyVersion>2.1.1.0</AssemblyVersion>
+    <FileVersion>2.1.1.0</FileVersion>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <!-- Ensure resolved assemblies are copied to output to avoid missing native/nuget DLLs -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <!-- Disable trimming to avoid removing needed assemblies at publish time -->
+    <PublishTrimmed>false</PublishTrimmed>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3650.58" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
+  </ItemGroup>
+
+  <!-- Ensure the ProtectedData assembly is copied to publish output if present in global-packages -->
+  <Target Name="CopyProtectedDataDll" AfterTargets="Publish">
+    <PropertyGroup>
+      <NuGetGlobalPackagesFolder>$(USERPROFILE)\.nuget\packages</NuGetGlobalPackagesFolder>
+      <ProtectedDataPkg>system.security.cryptography.protecteddata\8.0.0</ProtectedDataPkg>
+      <ProtectedDataDll1>$(NuGetGlobalPackagesFolder)\$(ProtectedDataPkg)\lib\net8.0\System.Security.Cryptography.ProtectedData.dll</ProtectedDataDll1>
+      <ProtectedDataDll2>$(NuGetGlobalPackagesFolder)\$(ProtectedDataPkg)\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll</ProtectedDataDll2>
+      <TargetPublishDir>$(PublishDir)</TargetPublishDir>
+    </PropertyGroup>
+    <Message Importance="high" Text="Checking for ProtectedData DLL at $(ProtectedDataDll1) or $(ProtectedDataDll2)" />
+    <Copy SourceFiles="$(ProtectedDataDll1)" DestinationFolder="$(TargetPublishDir)" SkipUnchangedFiles="true" Condition="Exists('$(ProtectedDataDll1)') and '$(TargetPublishDir)' != ''" />
+    <Copy SourceFiles="$(ProtectedDataDll2)" DestinationFolder="$(TargetPublishDir)" SkipUnchangedFiles="true" Condition="Exists('$(ProtectedDataDll2)') and '$(TargetPublishDir)' != ''" />
+  </Target>
+
+  <ItemGroup>
+    <None Update="wwwroot\\**\\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
