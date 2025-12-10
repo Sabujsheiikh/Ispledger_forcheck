@@ -1,0 +1,7 @@
+{
+  "LatestVersion": "2.1.1",
+  "MinSupportedVersion": "2.1.0",
+  "DownloadUrl": "https://github.com/Sabujsheiikh/ISPLedger_Updates/releases/download/Latest/ISPLedger_Setup.exe",
+  "Checksum": "8E1FC06776CE5CC0456B5D1F1E046594365AF0C191568B9856D5C0BC2E5C47DC",
+  "ReleaseNotes": "Release 2.1.1 — packaging and logging improvements; Google sign-in deferred."
+}
